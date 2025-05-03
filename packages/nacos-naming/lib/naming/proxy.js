@@ -53,6 +53,7 @@ class NameProxy extends Base {
     }
     this.serversFromEndpoint = [];
     this.lastSrvRefTime = 0;
+    this._accessToken = null;
   }
 
   get logger() {
@@ -161,8 +162,18 @@ class NameProxy extends Base {
 
     const url = (this.options.ssl ? 'https://' : 'http://') + serverAddr + api;
     if (this.options.username && this.options.password) {
-      params.username = this.options.username;
-      params.password = this.options.password;
+      // params.username = this.options.username;
+      // params.password = this.options.password;
+      // get access token
+      if (this._accessToken) {
+        if (Date.now() - this._accessToken.genTime < this._accessToken.tokenTtl) {
+          this._accessToken = await this.login(this.options.username, this.options.password);
+        }
+      } else {
+        this._accessToken = await this.login(this.options.username, this.options.password);
+      }
+      params.accessToken = this._accessToken.accessToken;
+
     }
     const result = await this.httpclient.request(url, {
       method,
@@ -217,6 +228,49 @@ class NameProxy extends Base {
     throw new Error('failed to req API: ' + api + ' after all servers(' + this.nacosDomain + ') tried');
   }
 
+  async login(username, password) {
+    const servers = this.serverList.length ? this.serverList : this.serversFromEndpoint;
+    const size = servers.length;
+
+    if (size === 0 && !this.nacosDomain) {
+      throw new Error('[NameProxy] no server available');
+    }
+
+    if (size > 0) {
+      let index = utility.random(size);
+      for (let i = 0; i < size; i++) {
+        const server = servers[index];
+        try {
+          const params = {
+            username,
+            password,
+          };
+          const url = (this.options.ssl ? 'https://' : 'http://') + server + Constants.NACOS_URL_LOGIN;
+          const result = await this.httpclient.request(url, {
+            method: 'POST',
+            data: params,
+            dataType: 'text',
+            dataAsQueryString: true,
+          });
+          if (result.status === 200) {
+            return {
+              ...JSON.parse(result.data),
+              genTime: Date.now(),
+            };
+          }
+          if (result.status === 304) {
+            return '';
+          }
+        } catch (err) {
+          this.logger.warn(err);
+        }
+        index = (index + 1) % size;
+      }
+      throw new Error('failed to req API: login after all servers(' + servers.join(',') + ') tried');
+    }
+    throw new Error('failed to req API:  login after all servers(' + this.nacosDomain + ') tried');
+
+  }
   async registerService(serviceName, groupName, instance) {
     this.logger.info('[NameProxy][REGISTER-SERVICE] %s registering service: %s with instance:%j', this.namespace, serviceName, instance);
 

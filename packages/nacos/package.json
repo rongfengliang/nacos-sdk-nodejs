@@ -1,5 +1,5 @@
 {
-  "name": "nacos",
+  "name": "@dalongrong/nacos",
   "version": "2.6.0",
   "description": "nacos client main package",
   "keywords": [
@@ -12,8 +12,8 @@
   "main": "dist/index.js",
   "author": "czy88840616@gmail.com",
   "dependencies": {
-    "nacos-config": "^2.6.0",
-    "nacos-naming": "^2.6.0"
+    "@dalongrong/nacos-config": "^2.6.0",
+    "@dalongrong/nacos-naming": "^2.6.0"
   },
   "devDependencies": {
     "@types/mocha": "^5.2.5",

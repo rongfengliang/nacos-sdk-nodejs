@@ -314,6 +314,7 @@ export interface API_ROUTE {
   PUBLISH: string;
   PUBLISH_ALL: string;
   REMOVE: string;
+  LOGIN: string;
   REMOVE_ALL: string;
   LISTENER: string;
 }

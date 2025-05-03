@@ -29,6 +29,8 @@ exports.FAILOVER_SWITCH = '00-00---000-VIPSRV_FAILOVER_SWITCH-000---00-00';
 
 exports.NACOS_URL_BASE = '/nacos/v1/ns';
 
+exports.NACOS_URL_LOGIN = '/nacos/v1/auth/login';
+
 exports.NACOS_URL_INSTANCE = exports.NACOS_URL_BASE + '/instance';
 
 exports.DEFAULT_NAMESPACE_ID = 'default';

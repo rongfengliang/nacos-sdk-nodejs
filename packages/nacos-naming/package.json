@@ -1,5 +1,5 @@
 {
-  "name": "nacos-naming",
+  "name": "@dalongrong/nacos-naming",
   "version": "2.6.0",
   "description": "nacos (https://nacos.io/en-us/) nodejs sdk",
   "main": "index.js",

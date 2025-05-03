@@ -1,5 +1,5 @@
 {
-  "name": "nacos-config",
+  "name": "@dalongrong/nacos-config",
   "version": "2.6.0",
   "description": "nacos config client",
   "keywords": [

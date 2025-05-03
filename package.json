@@ -1,5 +1,5 @@
 {
-  "name": "nacos",
+  "name": "@dalongrong/nacos",
   "version": "1.0.0",
   "description": "nacos (https://nacos.io/en-us/) nodejs sdk",
   "scripts": {

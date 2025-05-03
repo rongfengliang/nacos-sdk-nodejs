@@ -39,6 +39,7 @@ export class ClientWorker extends Base implements IClientWorker {
     BATCH_GET: `/v1/cs/configs`,
     BATCH_QUERY: `/v1/cs/configs`,
     PUBLISH: `/v1/cs/configs`,
+    LOGIN: `/nacos/v1/auth/login`,
     PUBLISH_ALL: `/v1/cs/configs`,
     REMOVE: `/v1/cs/configs`,
     REMOVE_ALL: `/v1/cs/configs`,
