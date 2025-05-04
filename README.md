@@ -1,18 +1,5 @@
 # nacos-sdk-nodejs
 
-[![NPM version][npm-image]][npm-url]
-[![build status][travis-image]][travis-url]
-[![David deps][david-image]][david-url]
-[![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lernajs.io/)
-
-[npm-image]: https://img.shields.io/npm/v/nacos.svg?style=flat-square
-[npm-url]: https://npmjs.org/package/nacos
-[travis-image]: https://img.shields.io/travis/nacos-group/nacos-sdk-nodejs.svg?style=flat-square
-[travis-url]: https://travis-ci.org/nacos-group/nacos-sdk-nodejs
-[david-image]: https://img.shields.io/david/nacos-group/nacos-sdk-nodejs.svg?style=flat-square
-[david-url]: https://david-dm.org/nacos-group/nacos-sdk-nodejs
-
-
 [Nacos](https://nacos.io/en-us/) Node.js SDK
 
 ## Install
