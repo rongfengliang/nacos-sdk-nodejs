@@ -24,12 +24,14 @@ import * as dns from 'dns';
 export class HttpAgent {
 
   options;
+  _accessToken;
   protected loggerDomain = 'Nacos';
   private debugPrefix = this.loggerDomain.toLowerCase();
   private debug = require('debug')(`${this.debugPrefix}:${process.pid}:http_agent`);
 
   constructor(options) {
     this.options = options;
+    this._accessToken = null;
   }
 
   get configuration(): IConfiguration {
@@ -92,14 +94,66 @@ export class HttpAgent {
   }
 
   get endpointQueryParams() {
-    return this.configuration.get(ClientOptionKeys.ENDPOINT_QUERY_PARAMS)
+    return this.configuration.get(ClientOptionKeys.ENDPOINT_QUERY_PARAMS);
   }
 
   get decodeRes() {
     return this.configuration.get(ClientOptionKeys.DECODE_RES);
   }
 
+ async  login(username: string, password: string) {
+   const unit = this.unit;
+   const currentServer = await this.serverListMgr.getCurrentServerAddr(unit);
+   let url = this.getRequestUrl(currentServer) + `/v1/auth/login`;
+   try {
+     const { encode = false, method = 'GET', data, timeout = this.requestTimeout, headers = {}, dataAsQueryString = false } = this.options;
 
+     let requestData = {
+         username: username,
+         password: password,
+     };
+     if (encode) {
+       requestData = encodingParams(data, this.defaultEncoding);
+     }
+     const res = await this.httpclient.request(url, {
+       rejectUnauthorized: false,
+       httpsAgent: false,
+       method,
+       data: requestData,
+       dataType: 'text',
+       headers,
+       timeout,
+       secureProtocol: 'TLSv1_2_method',
+       dataAsQueryString,
+     });
+     this.debug('%s %s, got %s, body: %j', method, url, res.status, res.data);
+     switch (res.status) {
+       case HTTP_OK:
+         if (this.decodeRes) {
+           return {
+             ...JSON.parse(this.decodeRes(res, method, this.defaultEncoding)),
+             genTime: Date.now(),
+           };
+         }
+         return {
+           ...JSON.parse(this.decodeResData(res, method)),
+           genTime: Date.now(),
+         };
+       case HTTP_NOT_FOUND:
+         return null;
+       case HTTP_CONFLICT:
+         await this.serverListMgr.updateCurrentServer(unit);
+         break;
+       default:
+         await this.serverListMgr.updateCurrentServer(unit);
+         break;
+     }
+   } catch (err) {
+     if (err.code === dns.NOTFOUND) {
+       throw err;
+     }
+   }
+ }
   /**
    * 请求
    * @param {String} path - 请求 path
@@ -125,8 +179,14 @@ export class HttpAgent {
 
     if (this.options?.configuration?.innerConfig?.username &&
         this.options?.configuration?.innerConfig?.password) {
-      data.username = this.options.configuration.innerConfig.username;
-      data.password = this.options.configuration.innerConfig.password;
+      if (this._accessToken) {
+        if (Date.now() - this._accessToken.genTime < this._accessToken.tokenTtl) {
+          this._accessToken = await this.login(this.options.configuration.innerConfig.username, this.options.configuration.innerConfig.password);
+        }
+      } else {
+        this._accessToken = await this.login(this.options.configuration.innerConfig.username, this.options.configuration.innerConfig.password);
+      }
+      data.accessToken = this._accessToken.accessToken;
     }
     let signStr = data.tenant;
     if (data.group && data.tenant) {
@@ -176,7 +236,7 @@ export class HttpAgent {
         switch (res.status) {
           case HTTP_OK:
             if (this.decodeRes) {
-              return this.decodeRes(res, method, this.defaultEncoding)
+              return this.decodeRes(res, method, this.defaultEncoding);
             }
             return this.decodeResData(res, method);
           case HTTP_NOT_FOUND:
