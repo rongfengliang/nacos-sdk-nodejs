@@ -1,6 +1,6 @@
 {
   "name": "@dalongrong/nacos",
-  "version": "2.6.1",
+  "version": "2.6.2",
   "description": "nacos client main package",
   "keywords": [
     "nacos",
@@ -12,8 +12,8 @@
   "main": "dist/index.js",
   "author": "czy88840616@gmail.com",
   "dependencies": {
-    "@dalongrong/nacos-config": "^2.6.1",
-    "@dalongrong/nacos-naming": "^2.6.1"
+    "@dalongrong/nacos-config": "^2.6.2",
+    "@dalongrong/nacos-naming": "^2.6.2"
   },
   "devDependencies": {
     "@types/mocha": "^5.2.5",
