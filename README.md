@@ -59,8 +59,8 @@ await client.deregisterInstance(serviceName, {
 ### Config Service
 
 ```js
-import {NacosConfigClient} from 'nacos';   // ts
-const NacosConfigClient = require('nacos').NacosConfigClient; // js
+import {NacosConfigClient} from '@dalongrong/nacos';   // ts
+const NacosConfigClient = require('@dalongrong/nacos').NacosConfigClient; // js
 
 // for find address mode
 const configClient = new NacosConfigClient({
