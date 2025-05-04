@@ -18,7 +18,7 @@
 ## Install
 
 ```bash
-npm install nacos --save
+npm install @dalongrong/nacos --save
 ```
 
 ## Version Mapping
@@ -35,7 +35,7 @@ Node.js SDK \ Nacos Server | 0.x.0 | 1.0.0 |
 ```js
 'use strict';
 
-const NacosNamingClient = require('nacos').NacosNamingClient;
+const NacosNamingClient = require('@dalongrong/nacos').NacosNamingClient;
 const logger = console;
 
 const client = new NacosNamingClient({
@@ -170,15 +170,6 @@ default value: [ClientOptions default value](https://github.com/nacos-group/naco
     - {String} dataId - data id
     - {String} group - group
   - {Function} listener - callback handler（optional，remove all listener when it is null）
-
-## Questions & Suggestions
-
-Please let us know how can we help. Do check out [issues](https://github.com/nacos-group/nacos-sdk-nodejs/issues) for bug reports or suggestions first.
-
-PR is welcome.
-
-nacos-sdk-nodejs ding group ： 44654232
-![image](https://user-images.githubusercontent.com/17695352/172582005-c661e2a0-49fa-425c-bf99-785bb7cd4dc1.png)
 
 
 ## License
