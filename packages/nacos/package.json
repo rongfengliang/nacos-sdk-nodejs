@@ -1,6 +1,6 @@
 {
   "name": "@dalongrong/nacos",
-  "version": "2.6.1",
+  "version": "2.6.0",
   "description": "nacos client main package",
   "keywords": [
     "nacos",
@@ -42,6 +42,10 @@
     "d.ts",
     "dist"
   ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nacos-group/nacos-sdk-nodejs.git"
@@ -50,5 +54,6 @@
   "bugs": {
     "url": "https://github.com/nacos-group/nacos-sdk-nodejs/issues"
   },
-  "homepage": "https://github.com/nacos-group/nacos-sdk-nodejs#readme"
+  "homepage": "https://github.com/nacos-group/nacos-sdk-nodejs#readme",
+  "gitHead": "8e683b5fe67c06fa7c2f340e2887fe8069631002"
 }

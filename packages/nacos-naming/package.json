@@ -1,6 +1,6 @@
 {
   "name": "@dalongrong/nacos-naming",
-  "version": "2.6.1",
+  "version": "2.6.0",
   "description": "nacos (https://nacos.io/en-us/) nodejs sdk",
   "main": "index.js",
   "files": [
@@ -17,6 +17,10 @@
     "pkgfiles": "egg-bin pkgfiles --check",
     "ci": "npm run autod -- --check && npm run pkgfiles && npm run lint && npm run cov",
     "contributors": "contributors -f plain -o AUTHORS"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
   },
   "repository": {
     "type": "git",
@@ -60,5 +64,6 @@
     "eslint-config-egg": "^7.3.1",
     "mm": "^2.5.0",
     "mz-modules": "^2.1.0"
-  }
+  },
+  "gitHead": "8e683b5fe67c06fa7c2f340e2887fe8069631002"
 }

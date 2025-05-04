@@ -1,6 +1,6 @@
 {
   "name": "@dalongrong/nacos-config",
-  "version": "2.6.1",
+  "version": "2.6.0",
   "description": "nacos config client",
   "keywords": [
     "nacos-config",
@@ -35,6 +35,10 @@
   "engines": {
     "node": ">= 8.0.0"
   },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
   "scripts": {
     "autod": "midway-bin autod",
     "lint": "tslint . --ext .ts",
@@ -49,5 +53,6 @@
     "d.ts",
     "dist",
     "src"
-  ]
+  ],
+  "gitHead": "8e683b5fe67c06fa7c2f340e2887fe8069631002"
 }
